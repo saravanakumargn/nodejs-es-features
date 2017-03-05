@@ -148,9 +148,7 @@ app.route('/admin/data-update')
   });
 
 app.get('/api/v1/update', function (request, response) {
-  jsonfile.readFile(updateDescFile, function (err, obj) {
-    response.json({test:'test'});
-  })
+  response.json({test:'test'});
 });
 
 app.get('/api/v1/agents', function (request, response) {
