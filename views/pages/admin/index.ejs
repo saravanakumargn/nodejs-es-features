@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <% include ../../partials/head.ejs %>
+  <body>
+  <% include ../../partials/header.ejs %>
+  <div class="container">
+    <% if (!user) { %>
+	<p>Welcome! Please <a href="/login">log in</a>.</p>
+<% } else { %>
+	<p>Hello, <%= user.displayName %>. View your <a href="/admin/profile">profile</a>.</p>
+  <h4>Admin update</h4>
+  <ul class="list-unstyled">
+  <li>
+  <a href="/admin/update">Update Description</a>
+  </li>
+  </ul>
+  <h4>APIs</h4>
+  <ul class="list-unstyled">
+  <li>
+  <a href="/api/v1/update" target="_blank">Check update</a>
+  </li>
+  </ul>
+    
+
+<% } %>
+</div>
+<% include ../../partials/script.ejs %>
+  </body>
+</html>

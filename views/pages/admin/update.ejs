@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<% include ../partials/header.ejs %>
+<% include ../../partials/head.ejs %>
     <body>
+    <% include ../../partials/header.ejs %>
         <div class="container">
             <h1>Update</h1>
-            <form action="/update" method="POST">
+            <form action="/admin/update" method="POST">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Update description</label>
                     <div class="col-sm-10">
@@ -18,5 +19,6 @@
                 </div>
             </form>
         </div>
+        <% include ../../partials/script.ejs %>
     </body>
 </html>
