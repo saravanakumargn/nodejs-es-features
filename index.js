@@ -85,16 +85,9 @@ app.get('/logout',
     res.redirect('/');
   });
 
-var pathEndpoint = '';
-if (process.env.NODE_ENV == 'production') {
-  pathEndpoint = './data/production';
-}
-else {
-  pathEndpoint = './data/dev';
-}
-var updateDescFile = `${pathEndpoint}/update.json`;
-var updateAgentsFile = `${pathEndpoint}/agents.json`;
-var updateDataFile = `${pathEndpoint}/data.json`;
+var updateDescFile = `data/update.json`;
+var updateAgentsFile = `data/agents.json`;
+var updateDataFile = `data/data.json`;
 
 function requireLogin(req, res, next) {
   if (req.user) {
