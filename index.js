@@ -92,6 +92,8 @@ else {
   pathEndpoint = './data/dev';
 }
 var updateDescFile = `${pathEndpoint}/update.json`;
+var updateAgentsFile = `${pathEndpoint}/agents.json`;
+var updateDataFile = `${pathEndpoint}/data.json`;
 
 function requireLogin(req, res, next) {
   // require('connect-ensure-login').ensureLoggedIn({ redirectTo: '/login', setReturnTo: false });
@@ -148,23 +150,54 @@ app.route('/admin/update')
       v: new Date().getTime(),
       desc: request.body.desc
     }
-    // console.log(request.body.desc, update);
-    //response.end('Saved');
-    jsonfile.writeFile(updateDescFile, update, function (err) {
-      // console.error(err);
-      // response.end('Saved');
+    jsonfile.writeFile(updateDescFile, JSON.parse(update), function (err) {
+      response.redirect('/admin/home');
+    })
+  });
+
+app.route('/admin/agents-update')
+  .get(function (request, response) {
+    response.render('pages/admin/agents-update', { user: request.user });
+  })
+  .post(urlencodedParser, function (request, response) {
+    // update = {
+    //   agents: request.body.agents
+    // }
+    jsonfile.writeFile(updateAgentsFile, JSON.parse(request.body.agents), function (err) {
+      response.redirect('/admin/home');
+    })
+  });
+
+app.route('/admin/data-update')
+  .get(function (request, response) {
+    response.render('pages/admin/data-update', { user: request.user });
+  })
+  .post(urlencodedParser, function (request, response) {
+    // update = {
+    //   data: request.body.jsdata
+    // }
+    jsonfile.writeFile(updateDataFile, JSON.parse(request.body.jsdata), function (err) {
       response.redirect('/admin/home');
     })
   });
 
 app.get('/api/v1/update', function (request, response) {
   jsonfile.readFile(updateDescFile, function (err, obj) {
-    // console.dir(obj)
     response.json(obj);
   })
-  // response.json({ na: 'te' });
-})
-  ;
+});
+
+app.get('/api/v1/agents', function (request, response) {
+  jsonfile.readFile(updateAgentsFile, function (err, obj) {
+    response.json(obj);
+  })
+});
+
+app.get('/api/v1/data', function (request, response) {
+  jsonfile.readFile(updateDataFile, function (err, obj) {
+    response.json(obj);
+  })
+});
 
 app.listen(app.get('port'), function () {
   console.log('Node app is running on port', app.get('port'));
