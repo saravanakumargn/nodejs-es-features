@@ -67,6 +67,7 @@ app.use(passport.session());
 app.get('/', function (request, response) {
   response.render('pages/index', { user: request.user });
 });
+
 app.get('/login',
   function (req, res) {
     res.render('pages/login');
