@@ -85,9 +85,9 @@ app.get('/logout',
     res.redirect('/');
   });
 
-var updateDescFile = `data/update.json`;
-var updateAgentsFile = `data/agents.json`;
-var updateDataFile = `data/data.json`;
+var updateDescFile = `data_files/update.json`;
+var updateAgentsFile = `data_files/agents.json`;
+var updateDataFile = `data_files/jsdata.json`;
 
 function requireLogin(req, res, next) {
   if (req.user) {
