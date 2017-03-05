@@ -65,6 +65,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', function (request, response) {
+  console.log('Enter index');
+  console.log(process.env.NODE_ENV);
   response.render('pages/index', { user: request.user });
 });
 app.get('/login',
