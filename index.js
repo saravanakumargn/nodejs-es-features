@@ -104,7 +104,6 @@ function requireLogin(req, res, next) {
   }
 }
 
-
 app.all("/admin/*", requireLogin, function (req, res, next) {
   next(); // if the middleware allowed us to get here,
   // just move on to the next route handler
