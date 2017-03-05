@@ -75,7 +75,7 @@ app.get('/login',
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
   function (req, res) {
-    res.redirect('/');
+    res.redirect('/admin/home');
   });
 
 app.get('/logout',
@@ -96,25 +96,11 @@ var updateAgentsFile = `${pathEndpoint}/agents.json`;
 var updateDataFile = `${pathEndpoint}/data.json`;
 
 function requireLogin(req, res, next) {
-  // require('connect-ensure-login').ensureLoggedIn({ redirectTo: '/login', setReturnTo: false });
-  // next();
-
-  // return function(req, res, next) {
-  // isAuthenticated is set by `deserializeUser()`
   if (req.user) {
     next();
   } else {
     res.redirect("/login");
   }
-  // }
-
-  //  res.redirect("/login");
-  // if (req.session.loggedIn) {
-  //   next(); // allow the next route to run
-  // } else {
-  //   // require the user to log in
-  //   res.redirect("/login"); // or render a form, etc.
-  // }
 }
 
 
@@ -122,13 +108,6 @@ app.all("/admin/*", requireLogin, function (req, res, next) {
   next(); // if the middleware allowed us to get here,
   // just move on to the next route handler
 });
-
-// app.get('/profile',
-//   require('connect-ensure-login').ensureLoggedIn(),
-//   function(req, res){
-//     res.render('pages/profile', { user: req.user });
-//   });
-
 
 app.get('/admin/home',
   function (req, res) {
@@ -150,7 +129,7 @@ app.route('/admin/update')
       v: new Date().getTime(),
       desc: request.body.desc
     }
-    jsonfile.writeFile(updateDescFile, JSON.parse(update), function (err) {
+    jsonfile.writeFile(updateDescFile, update, function (err) {
       response.redirect('/admin/home');
     })
   });
@@ -160,9 +139,6 @@ app.route('/admin/agents-update')
     response.render('pages/admin/agents-update', { user: request.user });
   })
   .post(urlencodedParser, function (request, response) {
-    // update = {
-    //   agents: request.body.agents
-    // }
     jsonfile.writeFile(updateAgentsFile, JSON.parse(request.body.agents), function (err) {
       response.redirect('/admin/home');
     })
@@ -173,9 +149,6 @@ app.route('/admin/data-update')
     response.render('pages/admin/data-update', { user: request.user });
   })
   .post(urlencodedParser, function (request, response) {
-    // update = {
-    //   data: request.body.jsdata
-    // }
     jsonfile.writeFile(updateDataFile, JSON.parse(request.body.jsdata), function (err) {
       response.redirect('/admin/home');
     })
