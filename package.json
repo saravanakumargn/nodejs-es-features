@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.0"
+    "body-parser": "^1.17.0",
+    "ejs": "2.4.1",
+    "express": "4.13.3",
+    "jsonfile": "^2.4.0"
   }
 }
