@@ -149,7 +149,7 @@ app.route('/admin/data-update')
 
 app.get('/api/v1/update', function (request, response) {
   jsonfile.readFile(updateDescFile, function (err, obj) {
-    response.json(obj);
+    response.json({test:'test'});
   })
 });
 
