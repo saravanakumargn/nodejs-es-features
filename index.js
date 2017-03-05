@@ -148,7 +148,7 @@ app.route('/admin/data-update')
   });
 
 app.get('/api/v1/update', function (request, response) {
-  response.json({test:'test'});
+  response.send('te');
 });
 
 app.get('/api/v1/agents', function (request, response) {
