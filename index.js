@@ -65,8 +65,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', function (request, response) {
-  console.log('Enter index');
-  console.log(process.env.NODE_ENV);
   response.render('pages/index', { user: request.user });
 });
 app.get('/login',
@@ -86,23 +84,29 @@ app.get('/logout',
     res.redirect('/');
   });
 
-
-var updateDescFile = './data/update.json';
+var pathEndpoint = '';
+if (process.env.NODE_ENV == 'production') {
+  pathEndpoint = './data/production';
+}
+else {
+  pathEndpoint = './data/dev';
+}
+var updateDescFile = `${pathEndpoint}/update.json`;
 
 function requireLogin(req, res, next) {
   // require('connect-ensure-login').ensureLoggedIn({ redirectTo: '/login', setReturnTo: false });
   // next();
 
-    // return function(req, res, next) {
-    // isAuthenticated is set by `deserializeUser()`
-    if (req.user) {
-      next();
-    } else {
-      res.redirect("/login");
-    }
+  // return function(req, res, next) {
+  // isAuthenticated is set by `deserializeUser()`
+  if (req.user) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
   // }
 
-//  res.redirect("/login");
+  //  res.redirect("/login");
   // if (req.session.loggedIn) {
   //   next(); // allow the next route to run
   // } else {
@@ -137,7 +141,7 @@ app.get('/admin/profile',
 
 app.route('/admin/update')
   .get(function (request, response) {
-      response.render('pages/admin/update', { user: request.user });
+    response.render('pages/admin/update', { user: request.user });
   })
   .post(urlencodedParser, function (request, response) {
     update = {
